@@ -23,15 +23,23 @@ int main() {
     struct login currentLogin;
     int intLoginFile;
     intLoginFile = creat(LOGIN_FILE, S_IRUSR | S_IWUSR); // syscall
+
+    if(intLoginFile==-1){
+        perror(LOGIN_FILE);
+        return 1;
+    }
     for(int i = 0; i<3; i++) {
-        strcpy(currentLogin.user_name, "John");
+        sprintf(currentLogin.user_name, "user_%d", i);
+        time(&currentLogin.time_stamp);
         write(intLoginFile, &currentLogin, sizeof(struct login));
+        sleep(1);
     }
     close(intLoginFile);    //syscall
 
+    intLoginFile = open(LOGIN_FILE, O_RDONLY);
     for(int i = 0; i<3; i++) {
-        strcpy(currentLogin.user_name, "John");
         read(intLoginFile, &currentLogin, sizeof(struct login));
+        printf("User name #%d: %s logged in at %.24s\n", i, currentLogin.user_name, asctime(localtime(&currentLogin.time_stamp)));
     }
     close(intLoginFile);    //syscall
 
