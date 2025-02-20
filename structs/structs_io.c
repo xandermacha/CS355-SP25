@@ -29,5 +29,11 @@ int main() {
     }
     close(intLoginFile);    //syscall
 
+    for(int i = 0; i<3; i++) {
+        strcpy(currentLogin.user_name, "John");
+        read(intLoginFile, &currentLogin, sizeof(struct login));
+    }
+    close(intLoginFile);    //syscall
+
     return 0;
 }
