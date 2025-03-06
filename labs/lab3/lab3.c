@@ -10,7 +10,7 @@ struct login {
 };
 
 #define LOGIN_FILE "login_file.txt"
-
+// TODO: lab3
 int main() {
 
 	struct login currentLogin;
