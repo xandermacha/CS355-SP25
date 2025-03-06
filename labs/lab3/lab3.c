@@ -13,7 +13,7 @@ struct login {
 // TODO: lab3
 int main() {
 
-	struct login currentLogin;
+	struct login currentLogin;		// login struct
 	int iLoginFile;
 	int iLoginLen=sizeof(currentLogin);
 
@@ -24,8 +24,8 @@ int main() {
 	}
 
 	for(int i=0; i<3; i++) {
-		sprintf(currentLogin.user_name, "user_%d", i);
-		sprintf(currentLogin.user_terminal, "terminal_%d", i+10);
+		sprintf(currentLogin.user_name, "user_%d", i); // writes formatted output to current login struct
+		sprintf(currentLogin.user_terminal, "terminal_%d", i+10);	// adds terminal into info to file by incrementing user%d by 10 to get terminal num
 		time(&currentLogin.time_stamp);
 		write(iLoginFile, &currentLogin, iLoginLen);
 		sleep(1);
