@@ -36,24 +36,33 @@ int main(int ac, char *av[]) {
 	if((fd = open_file(av[2])) == -1) {
 		return fd;
 	}
+	int boolLine_empty = 1, boolLine_num_printed = 0;
 	while((iNum_bytes_read=read(fd, &sBuff, BUFFERSIZE)) > 0) {
 		for(int i = 0; i<iNum_bytes_read; i++) {
 			char cCurrent = sBuff[i];
-			if(boolLine_start && iFlagN) {
+			if (cCurrent != '\n' && cCurrent != '\t' && cCurrent != ' ') {
+				boolLine_empty = 0;
+			}
+			
+			if(boolLine_start && (!boolLine_num_printed && iFlagN)) {
 				flagN_action(&iteration);
-				boolLine_start = 0;
+				boolLine_num_printed = 1;
 				iteration++;
 			}
-			else {
-				boolLine_start = 0;
-			}
 			if(cCurrent == '\n' && iFlagE) {
+				boolLine_start = 1;
+				boolLine_num_printed = 0;
 				flagE_action();
-				putchar(cCurrent);
 			}
-			if (!iFlagE) {
-				putchar(cCurrent);
+			else if(cCurrent == '\n') {
+				boolLine_start = 1;
+				boolLine_num_printed = 0;
 			}
+
+			if(boolLine_empty && iFlagS) {
+				break;
+			}
+			putchar(cCurrent);
 		}
 
 	}
@@ -65,7 +74,7 @@ void flagE_action() {
 	putchar('$');
 }
 void flagN_action(int *iteration) {
-	printf("%d", *iteration);
+	printf("%5d ", *iteration++);
 }
 
 int open_file(char *sFile_name) {
