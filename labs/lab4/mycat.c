@@ -74,7 +74,7 @@ void flagE_action() {
 	putchar('$');
 }
 void flagN_action(int *iteration) {
-	printf("%5d ", *iteration++);
+	printf("%5d ", *iteration);
 }
 
 int open_file(char *sFile_name) {
