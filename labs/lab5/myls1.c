@@ -20,7 +20,7 @@ void process_entry(char *dir_entry_name){
 		}
 	}
 }
-void ls_current_dir(char *dir_name) {
+void do_ls(char *dir_name) {
 	DIR *dir_ptr;
 	struct dirent *dirent_ptr;
 	dir_ptr = opendir(dir_name);
@@ -52,5 +52,6 @@ int main(int ac, char *av[]) {
 		}
 	}
 	
+	do_ls(".");
 	return 0;
 }
