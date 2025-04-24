@@ -9,7 +9,7 @@ int largest_prime = 2;
 int sigint_received = 0;
 
 int main() {
-	signal(SIGINT, ouch);
+	signal(SIGINT, ouch); // ctrl + c
 
 	initscr();
 	noecho();
@@ -25,7 +25,7 @@ int main() {
 			}
 		}
 		if(is_prime) {
-			largest_prime = num; 
+			largest_prime = num;
 		}
 		num++;
 
