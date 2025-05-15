@@ -5,7 +5,7 @@
 int main() {
 	int fd;
 	if((fd = open("test.txt", O_RDONLY)) < 0){
-		perror("error opening file");
+		perror("error");
 		return 1;
 	}
 	printf("opened file");
