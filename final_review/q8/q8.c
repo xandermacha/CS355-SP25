@@ -4,10 +4,12 @@
 #include <curses.h>
 #include <signal.h>
 
+#define UPEDGE 0
+#define DOWNEDGE (LINES-1)
 int line_max;
 int col_max;
 const char *msg = "Hello, World!";
-
+int speed = 1000000;
 void handle_sigint(int);
 
 int main() {
@@ -20,29 +22,27 @@ int main() {
     int row_max, col_max;
     getmaxyx(stdscr, row_max, col_max);
 
-    int x = col_max /2;
-    int y = row_max/2; 
+    int y = DOWNEDGE;
     int direction = 1;
 
     while(1) {
         clear();
-        mvprintw(y, x, "%s", msg);
+        mvprintw(y, 0, "%s", msg);
         refresh();
         
-        if(y <= 0) {
+        if(y <= UPEDGE) {
             direction = 1;
         }
-        else if(y >= row_max -1) {
+        else if(y >= DOWNEDGE) {
             direction = -1;
         }
         
         y += direction;
-        usleep(1000000);
+        usleep(speed);
     }
     return 0;
 }
 
 void handle_sigint(int signum) {
-    endwin();
-    exit(0);
+    speed = speed/10;
 }
